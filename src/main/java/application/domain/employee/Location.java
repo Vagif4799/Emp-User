@@ -1,19 +1,45 @@
 package application.domain.employee;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Location {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "location_id", nullable = false, unique = true)
     private Long locationId;
 
+    @Column(length = 25)
     private String streetAddress;
 
+    @Column(name = "postalCode")
     private int postalCode;
 
     private String city;
 
+    /**
+     * @OneToMany
+     * Many Departments can be in same location
+     * We keep these departments as a collection type
+     * ex: in targovy there are so many bank departments in same location
+     */
+
+    /**
+     * @cascade
+     * if i change location, connected values will be changed automatically
+     * ex: if location city is baku, departments are software,
+     * tester, network.
+     * if i change this location, we show how much departments will change.
+     * cascade type can be: all, merge and so on. it shows effect level
+     * of the updates
+     */
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
     private List<Department> departments;
+
 
     public Location() {
     }
