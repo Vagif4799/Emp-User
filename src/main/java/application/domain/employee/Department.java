@@ -1,16 +1,35 @@
 package application.domain.employee;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Department {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "department_id")
     private Long departmentId;
 
+    @Column
     private String departmentName;
 
+
+    /**
+     * @FetchType
+     * when we write "select" from department table,
+     * we use fetch type lazy to get connected tables.
+     * So, if we say Eager, it will bring connected table, too.
+     * But, Lazy, select department will only take departments stuff
+     * but not location table.
+     */
+
+    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", foreignKey = @ForeignKey(foreignKeyDefinition = "location_fk"))
     private Location location;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
     private List<Employee> employees;
 
     public Department() {

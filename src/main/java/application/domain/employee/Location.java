@@ -34,7 +34,17 @@ public class Location {
      * tester, network.
      * if i change this location, we show how much departments will change.
      * cascade type can be: all, merge and so on. it shows effect level
-     * of the updates
+     * of the updates.
+     * if i delete this location, connected departments
+     * will be deleted(cascade.all).
+     */
+
+    /**
+     * @mappedBy
+     * we give priority to the specific class
+     * "location" - in Department we have Location type of location
+     * Reason: first-class is department. and in department
+     * location foreign key added.
      */
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")

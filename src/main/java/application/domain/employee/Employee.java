@@ -1,24 +1,37 @@
 package application.domain.employee;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Employee {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long employeeId;
 
+    @Column
     private String firstName;
 
+    @Column
     private String lastName;
 
+    @Column
     private String email;
 
+    @Column
     private String phoneNumber;
 
+    @Temporal(TemporalType.DATE)
     private Date hireDate;
 
+    @ManyToOne(targetEntity = Job.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id", foreignKey = @ForeignKey(foreignKeyDefinition = "job_fk"))
     private Job job;
 
+    @ManyToOne(targetEntity = Department.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", foreignKey = @ForeignKey(foreignKeyDefinition = "department_fk"))
     private Department department;
 
     public Employee() {

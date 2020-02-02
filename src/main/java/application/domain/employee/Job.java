@@ -1,18 +1,26 @@
 package application.domain.employee;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Job {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long jobId;
 
+    @Column
     private String jobTitle;
 
+    @Column
     private double minSalary;
 
+    @Column
     private double maxSalary;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "job")
     private List<Employee> employees;
 
     public Job() {
